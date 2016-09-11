@@ -50,6 +50,7 @@
 * Install dependencies **npm i**
 * Start application **npm start**
 * Page will open automatically in the browser
+* To build the app run **npm run build**. Resulting index.html, main.css and main.js will be placed into dist folder
 
 ##Conventions
 
