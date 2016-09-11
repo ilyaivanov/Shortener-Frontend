@@ -1,8 +1,9 @@
 import React, {PropTypes} from 'react';
+import Shortened from './ShortenedLink';
 import {Collapse, Form, FormControl, ControlLabel, FormGroup, Button} from 'react-bootstrap';
+
 let shorten = props => {
 
-    var link = props.shortened ? props.shortened.url : "";
 
     return (<div className="container">
         <h1>Shortener</h1>
@@ -12,9 +13,8 @@ let shorten = props => {
         </Collapse>
 
         <Collapse in={!!props.shortened}>
-            <div>
-                <a href={link}>{link}</a>
-                <Button onClick={props.copyLinkToClipboard} bsSize="xsmall">copy</Button>
+            <div><Shortened copyLinkToClipboard={props.copyLinkToClipboard}
+                            shortened={props.shortened}/>
             </div>
         </Collapse>
 
@@ -30,7 +30,7 @@ let shorten = props => {
             </Button>
         </Form>
     </div>);
-}
+};
 shorten.propTypes = {
     shorten: PropTypes.func.isRequired,
     onUrlChange: PropTypes.func.isRequired,

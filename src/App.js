@@ -1,11 +1,10 @@
-import React, {PropTypes} from 'react';
+import React from 'react';
 import Shorten from './components/ShortenPage';
 import BitlyAPI from './api/BitlyAPI';
 import copyToClip from './utils/copyToClipboard';
 
+//statefull container
 export default class App extends React.Component {
-    //statefull container
-
     constructor(props) {
         super(props);
 
@@ -37,19 +36,17 @@ export default class App extends React.Component {
             });
     }
 
-    copyLinkToClipboard(){
+    copyLinkToClipboard() {
         copyToClip(this.state.shortened.url)
     }
 
     render() {
         return (
-            <div>
-                <Shorten onUrlChange={this.setUrl}
-                         shorten={this.shorten}
-                         shortened={this.state.shortened}
-                         copyLinkToClipboard={this.copyLinkToClipboard}
-                         isLoading={this.state.isLoading}/>
-            </div>
+            <Shorten onUrlChange={this.setUrl}
+                     shorten={this.shorten}
+                     shortened={this.state.shortened}
+                     copyLinkToClipboard={this.copyLinkToClipboard}
+                     isLoading={this.state.isLoading}/>
         );
     }
 }
