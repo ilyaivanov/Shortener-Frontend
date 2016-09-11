@@ -1,11 +1,11 @@
 import React from 'react';
-import Shorten from './components/ShortenPage';
-import BitlyAPI from './api/BitlyAPI';
-import copyToClip from './utils/copyToClipboard';
-import {NotificationStack} from 'react-notification';
-import formatDate from './utils/dateUtils';
 import LocalStorageMixin from 'react-localstorage';
 import reactMixin from 'react-mixin';
+import {NotificationStack} from 'react-notification';
+import copyToClip from './utils/copyToClipboard';
+import formatDate from './utils/dateUtils';
+import shorteningService from './api/shorteningService';
+import Shorten from './components/ShortenPage';
 
 //statefull container
 class App extends React.Component {
@@ -38,8 +38,7 @@ class App extends React.Component {
     shorten() {
         this.setState({isLoading: true});
 
-        let service = new BitlyAPI();
-        service.shorten(this.state.url)
+        shorteningService(this.state.url)
             .then(shortened => {
                     shortened.date = formatDate(new Date());
                     this.setState({
@@ -53,8 +52,8 @@ class App extends React.Component {
     }
 
     copyLinkToClipboard(shortened) {
-        copyToClip(shortened.url);
-        this.addNotification(`${shortened.url} copied to clipboard`);
+        copyToClip(shortened.shorten_url);
+        this.addNotification(`${shortened.shorten_url} copied to clipboard`);
     }
 
     addNotification(message, isError) {
@@ -66,7 +65,7 @@ class App extends React.Component {
                 className: isError ? "error-notification" : "",
                 action: 'Dismiss',
                 onClick: () => this.removeNotification(newCount),
-                dismissAfter: 7000
+                dismissAfter: 4000
             }]),
             notificationId: newCount
         });
@@ -100,6 +99,6 @@ class App extends React.Component {
     }
 }
 
-reactMixin(App.prototype, LocalStorageMixin);
+//reactMixin(App.prototype, LocalStorageMixin);
 
 export default App;
