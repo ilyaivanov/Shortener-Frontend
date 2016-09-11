@@ -1,4 +1,4 @@
-export default class ShorteningAPI {
+export default class BitlyA {
     shorten(url) {
         //track if there are any pending requests
         //if there are - abot old and trigger new
@@ -9,8 +9,11 @@ export default class ShorteningAPI {
                 "url": url,
                 "shorten_url": "http://localhost:3000/s4"
             };
+            let accessToken = a06400a1dcadee2de02a7df7bee8110fb03523ee;
 
-            let bitLySampleResponse = {
+            let bitLyrequest = `https://api-ssl.bitly.com/v3/shorten?access_token=${accessToken}&longUrl=${url}`;
+
+            let bitLyResponse = {
                 "status_code": 200,
                 "status_txt": "OK",
                 "data": {
@@ -22,7 +25,7 @@ export default class ShorteningAPI {
                 }
             };
 
-            setTimeout(() => resolve(bitLySampleResponse), delay);
+            setTimeout(() => resolve(bitLyResponse), delay);
         });
     }
 }
