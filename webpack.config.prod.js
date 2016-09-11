@@ -22,7 +22,12 @@ export default {
   target: 'web', // necessary per https://webpack.github.io/docs/testing.html#compile-and-test
   output: {
     path: `${__dirname}/dist`,
-    publicPath: '/',
+
+    //commented out for gh-pages relative path
+    //currently index.html path is like href="main.hash.css"
+    //comment our if you need           href="/main.hash.css"
+    // publicPath: '/',
+
     filename: '[name].[chunkhash].js'
   },
   plugins: [
@@ -48,7 +53,8 @@ export default {
         useShortDoctype: true,
         removeEmptyAttributes: true,
         removeStyleLinkTypeAttributes: true,
-        keepClosingSlash: true,
+        keepClosingSlash: false,
+        keepOpeningSlash: false,
         minifyJS: true,
         minifyCSS: true,
         minifyURLs: true
