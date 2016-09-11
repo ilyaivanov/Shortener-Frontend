@@ -23,6 +23,10 @@ body {
   margin-top: 40px;
 }
 
+.badge{
+  margin-left: 5px;
+}
+
 .error-notification{
   //!important is ugly, but notification's css specificity is hard to override
   background-color: #a50000 !important;

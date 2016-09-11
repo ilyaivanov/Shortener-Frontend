@@ -1,6 +1,7 @@
 import React from 'react';
 import LocalStorageMixin from 'react-localstorage';
 import reactMixin from 'react-mixin';
+import History from './components/History';
 import {NotificationStack} from 'react-notification';
 import copyToClip from './utils/copyToClipboard';
 import formatDate from './utils/dateUtils';
@@ -14,12 +15,10 @@ class App extends React.Component {
 
         this.setUrl = this.setUrl.bind(this);
         this.shorten = this.shorten.bind(this);
+        this.clearHistory = this.clearHistory.bind(this);
         this.copyLinkToClipboard = this.copyLinkToClipboard.bind(this);
 
         //set initial state, otherwise null
-        let createItem = (long_url, url, date) => ({
-            long_url, url, date
-        });
         this.state = {
             url: '',
             isLoading: false,
@@ -71,6 +70,10 @@ class App extends React.Component {
         });
     }
 
+    clearHistory() {
+        this.setState({history: []});
+    }
+
     removeNotification(count) {
         this.setState({
             notifications: this.state.notifications.filter(n => n.key !== count)
@@ -81,13 +84,20 @@ class App extends React.Component {
         return (
             <div>
                 <div className="bootstrap-context">
-                    <Shorten onUrlChange={this.setUrl}
-                             shorten={this.shorten}
-                             shortened={this.state.shortened}
-                             copyLinkToClipboard={this.copyLinkToClipboard}
-                             isLoading={this.state.isLoading}
-                             history={this.state.history}/>
+                    <div className="container">
+                        <Shorten onUrlChange={this.setUrl}
+                                 shorten={this.shorten}
+                                 shortened={this.state.shortened}
+                                 copyLinkToClipboard={this.copyLinkToClipboard}
+                                 isLoading={this.state.isLoading}/>
+
+                        <History history={this.state.history}
+                                 copyLinkToClipboard={this.copyLinkToClipboard}
+                                 clearHistory={this.clearHistory}/>
+
+                    </div>
                 </div>
+
                 <NotificationStack
                     notifications={this.state.notifications}
                     onDismiss={notification => this.setState({
@@ -99,6 +109,6 @@ class App extends React.Component {
     }
 }
 
-//reactMixin(App.prototype, LocalStorageMixin);
+reactMixin(App.prototype, LocalStorageMixin);
 
 export default App;

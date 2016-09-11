@@ -6,7 +6,7 @@ import {Collapse, Form, FormControl, ControlLabel, FormGroup, Button} from 'reac
 let shorten = props => {
 
 
-    return (<div className="container">
+    return (<div >
         <h1 className="page-header">Shortener</h1>
 
         <Collapse in={props.isLoading}>
@@ -14,8 +14,9 @@ let shorten = props => {
         </Collapse>
 
         <Collapse in={(!props.isLoading && !!props.shortened)}>
-            <div className="recent-panel"><Shortened copyLinkToClipboard={props.copyLinkToClipboard}
-                            shortened={props.shortened}/>
+            <div className="recent-panel">
+                <Shortened copyLinkToClipboard={props.copyLinkToClipboard}
+                           shortened={props.shortened}/>
             </div>
         </Collapse>
 
@@ -30,8 +31,7 @@ let shorten = props => {
                 Shorten
             </Button>
         </Form>
-        <History history={props.history}
-                 copyLinkToClipboard={props.copyLinkToClipboard}/>
+
     </div>);
 };
 shorten.propTypes = {
@@ -39,7 +39,6 @@ shorten.propTypes = {
     onUrlChange: PropTypes.func.isRequired,
     copyLinkToClipboard: PropTypes.func.isRequired,
     shortened: PropTypes.object,
-    history: PropTypes.array,
     isLoading: PropTypes.bool.isRequired
 };
 

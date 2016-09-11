@@ -16,7 +16,8 @@
 * Bootstrap is isolated into a separate selector, so that it won't conflict with Notification library
 * Bit.ly specific behaviour is extracted into separate API service
    
-   
+##Endpoint configuration
+   Endpoint are accessed via services in **api** folder. In order to configure Tubity service, navigate to [src/api/tubityAPI.js](https://github.com/ilyaivanov/shortener/blob/master/src/api/tubityAPI.js)
    
    
 ##Structure
