@@ -20,13 +20,16 @@
    
    
 ##Structure
-![image](http://puu.sh/r7yeb/fdd9aa9f11.png)
+
+![image](http://puu.sh/r7BPq/a284f7faf5.png)
 
 ##Key items
 
 * **node_modules** - external libraries
 * **src** - application source codes
     * **api** - behaviour to access external api
+        * **\*API.js** - endpoint specific behaviour including configuration
+        * **shorteningService.js** - general service used by App.js. Decides which endpoint to use. 
     * **components** - react pure, stateless componets
     * **styles** - custom styles and theme configuration from bootswatch
     * **utils** - helper functions
@@ -46,3 +49,7 @@
 * Install dependencies **npm i**
 * Start application **npm start**
 * Page will open automatically in the browser
+
+##Conventions
+
+All React.js components are named via PascalCasing, other files have camelCasing names. 
