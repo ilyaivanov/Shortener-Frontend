@@ -29,7 +29,7 @@
   "author": "Cory House",
   "license": "MIT",
   "dependencies": {
-    "bootstrap": "^3.3.7",
+    "bootstrap-sass": "^3.3.7",
     "jquery": "^3.1.0",
     "react": "15.3.1",
     "react-bootstrap": "^0.30.3",
@@ -77,6 +77,7 @@
     "react-addons-test-utils": "15.3.1",
     "redux-immutable-state-invariant": "1.2.3",
     "replace": "0.3.0",
+    "resolve-url-loader": "^1.6.0",
     "rimraf": "2.5.4",
     "sass-loader": "4.0.0",
     "sinon": "1.17.5",
