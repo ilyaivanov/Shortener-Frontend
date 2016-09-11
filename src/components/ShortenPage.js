@@ -7,7 +7,7 @@ let shorten = props => {
 
 
     return (<div className="container">
-        <h1>Shortener</h1>
+        <h1 className="page-header">Shortener</h1>
 
         <Collapse in={props.isLoading}>
             <div><b>Loading...</b></div>
