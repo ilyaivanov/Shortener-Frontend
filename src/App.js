@@ -4,9 +4,11 @@ import BitlyAPI from './api/BitlyAPI';
 import copyToClip from './utils/copyToClipboard';
 import {NotificationStack} from 'react-notification';
 import formatDate from './utils/dateUtils';
+import LocalStorageMixin from 'react-localstorage';
+import reactMixin from 'react-mixin';
 
 //statefull container
-export default class App extends React.Component {
+class App extends React.Component {
     constructor(props) {
         super(props);
 
@@ -61,7 +63,7 @@ export default class App extends React.Component {
             notifications: this.state.notifications.concat([{
                 message,
                 key: newCount,
-                className: isError? "error-notification" : "",
+                className: isError ? "error-notification" : "",
                 action: 'Dismiss',
                 onClick: () => this.removeNotification(newCount),
                 dismissAfter: 7000
@@ -97,3 +99,7 @@ export default class App extends React.Component {
         );
     }
 }
+
+reactMixin(App.prototype, LocalStorageMixin);
+
+export default App;
