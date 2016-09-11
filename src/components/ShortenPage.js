@@ -17,10 +17,10 @@ let shorten = props => (
                            shortened={props.shortened}/>
             </div>
         </Collapse>
-
+        <br/>
         <Form>
             <FormGroup>
-                <ControlLabel>Url</ControlLabel>
+                <ControlLabel><b>Url</b></ControlLabel>
                 <FormControl onChange={e => props.onUrlChange(e.target.value)}
                              type="text"
                              placeholder="https://example.com/very/long/link/indeed"/>
