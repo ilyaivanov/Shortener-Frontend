@@ -39,13 +39,15 @@ export default class App extends React.Component {
         let service = new BitlyAPI();
         service.shorten(this.state.url)
             .then(shortened => {
-                shortened.date = formatDate(new Date());
-                this.setState({
-                    isLoading: false,
-                    shortened,
-                    history: this.state.history.concat([shortened])
-                });
-            });
+                    shortened.date = formatDate(new Date());
+                    this.setState({
+                        shortened,
+                        history: this.state.history.concat([shortened])
+                    });
+                },
+                errorMessage => this.addNotification(errorMessage, true)
+            )
+            .then(() => this.setState({isLoading: false}));
     }
 
     copyLinkToClipboard(shortened) {
@@ -53,13 +55,13 @@ export default class App extends React.Component {
         this.addNotification(`${shortened.url} copied to clipboard`);
     }
 
-    addNotification(message) {
+    addNotification(message, isError) {
         const newCount = this.state.notificationId + 1;
         return this.setState({
             notifications: this.state.notifications.concat([{
                 message,
                 key: newCount,
-                className: "shortened-notification",
+                className: isError? "error-notification" : "",
                 action: 'Dismiss',
                 onClick: () => this.removeNotification(newCount),
                 dismissAfter: 7000
@@ -75,7 +77,6 @@ export default class App extends React.Component {
     }
 
     render() {
-        console.log(this.state.notifications);
         return (
             <div>
                 <div className="bootstrap-context">

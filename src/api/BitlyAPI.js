@@ -20,7 +20,18 @@ export default class BitlyA {
             // }
 
             $.ajax(bitLyrequest)
-                .done(response => resolve(response.data))
+                .done(function (response) {
+                    if (response.status_code == 200) {
+                        resolve(response.data)
+                    } else {
+                        var humanMessages = {
+                            "INVALID_URI": "Invalid Url",
+                            "ALREADY_A_BITLY_LINK": "You are trying to short a bit.ly link"
+                        };
+                        var message = humanMessages[response.status_txt] || 'Unknown error';
+                        reject(message);
+                    }
+                })
                 .fail(reject);
         });
     }

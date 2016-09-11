@@ -22,3 +22,8 @@ body {
 .history-panel{
   margin-top: 40px;
 }
+
+.error-notification{
+  //!important is ugly, but notification's css specificity is hard to override
+  background-color: #a50000 !important;
+}
