@@ -2,6 +2,7 @@ import React from 'react';
 import Shorten from './components/ShortenPage';
 import BitlyAPI from './api/BitlyAPI';
 import copyToClip from './utils/copyToClipboard';
+import {Notification} from 'react-notification';
 
 //statefull container
 export default class App extends React.Component {
@@ -14,8 +15,10 @@ export default class App extends React.Component {
 
         //set initial state, otherwise null
         this.state = {
-            url: "",
-            isLoading: false
+            url: '',
+            isLoading: false,
+            isNotificationActive: false,
+            message: ''
         }
     }
 
@@ -37,16 +40,25 @@ export default class App extends React.Component {
     }
 
     copyLinkToClipboard() {
-        copyToClip(this.state.shortened.url)
+        copyToClip(this.state.shortened.url);
+        var message = `${this.state.shortened.url} copied to clipboard`
+        this.setState({isNotificationActive: true, message});
+        setTimeout(() => this.setState({isNotificationActive: false}), 3000);
     }
 
     render() {
         return (
-            <Shorten onUrlChange={this.setUrl}
-                     shorten={this.shorten}
-                     shortened={this.state.shortened}
-                     copyLinkToClipboard={this.copyLinkToClipboard}
-                     isLoading={this.state.isLoading}/>
+            <div>
+                <Shorten onUrlChange={this.setUrl}
+                         shorten={this.shorten}
+                         shortened={this.state.shortened}
+                         copyLinkToClipboard={this.copyLinkToClipboard}
+                         isLoading={this.state.isLoading}/>
+                <Notification
+                    isActive={this.state.isNotificationActive}
+                    message={this.state.message}
+                />
+            </div>
         );
     }
 }
