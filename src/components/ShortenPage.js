@@ -13,7 +13,7 @@ let shorten = props => {
             <div><b>Loading...</b></div>
         </Collapse>
 
-        <Collapse in={!!props.shortened}>
+        <Collapse in={(!props.isLoading && !!props.shortened)}>
             <div className="recent-panel"><Shortened copyLinkToClipboard={props.copyLinkToClipboard}
                             shortened={props.shortened}/>
             </div>
