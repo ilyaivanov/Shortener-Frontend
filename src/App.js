@@ -1,5 +1,6 @@
 import React, {PropTypes} from 'react';
 import Shorten from './components/ShortenPage';
+import BitlyAPI from './api/BitlyAPI';
 
 export default class App extends React.Component {
     //statefull container
@@ -12,7 +13,8 @@ export default class App extends React.Component {
 
         //set initial state, otherwise null
         this.state = {
-            url: ""
+            url: "",
+            isLoading: false
         }
     }
 
@@ -21,11 +23,15 @@ export default class App extends React.Component {
     }
 
     shorten() {
-        var shortened = {
-            longUrl: this.state.url,
-            shortUrl: 'http://www.google.com',
-        };
-        this.setState({shortened});
+        this.setState({isLoading: true});
+        var service = new BitlyAPI();
+        service.shorten(this.state.url)
+            .then(shortened => {
+                this.setState({
+                    isLoading: false,
+                    shortened
+                });
+            });
     }
 
     render() {
@@ -33,7 +39,8 @@ export default class App extends React.Component {
             <div>
                 <Shorten onUrlChange={this.setUrl}
                          shorten={this.shorten}
-                         shortened={this.state.shortened}/>
+                         shortened={this.state.shortened}
+                         isLoading={this.state.isLoading}/>
             </div>
         );
     }

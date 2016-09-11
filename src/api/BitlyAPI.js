@@ -9,7 +9,7 @@ export default class BitlyA {
                 "url": url,
                 "shorten_url": "http://localhost:3000/s4"
             };
-            let accessToken = a06400a1dcadee2de02a7df7bee8110fb03523ee;
+            let accessToken = 'a06400a1dcadee2de02a7df7bee8110fb03523ee';
 
             let bitLyrequest = `https://api-ssl.bitly.com/v3/shorten?access_token=${accessToken}&longUrl=${url}`;
 
@@ -25,7 +25,7 @@ export default class BitlyA {
                 }
             };
 
-            setTimeout(() => resolve(bitLyResponse), delay);
+            setTimeout(() => resolve(bitLyResponse.data), delay);
         });
     }
 }
