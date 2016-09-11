@@ -12,10 +12,12 @@ let shorten = props => {
         </Collapse>
 
         <Collapse in={!!props.shortened}>
-            <div><a href={link}>{link}</a> <Button bsSize="xsmall">copy</Button></div>
+            <div>
+                <a href={link}>{link}</a>
+                <Button onClick={props.copyLinkToClipboard} bsSize="xsmall">copy</Button>
+            </div>
         </Collapse>
 
-        <br/>
         <Form>
             <FormGroup>
                 <ControlLabel>Url</ControlLabel>
@@ -32,6 +34,7 @@ let shorten = props => {
 shorten.propTypes = {
     shorten: PropTypes.func.isRequired,
     onUrlChange: PropTypes.func.isRequired,
+    copyLinkToClipboard: PropTypes.func.isRequired,
     shortened: PropTypes.object,
     isLoading: PropTypes.bool.isRequired
 };

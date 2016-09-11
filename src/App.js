@@ -1,6 +1,7 @@
 import React, {PropTypes} from 'react';
 import Shorten from './components/ShortenPage';
 import BitlyAPI from './api/BitlyAPI';
+import copyToClip from './utils/copyToClipboard';
 
 export default class App extends React.Component {
     //statefull container
@@ -10,6 +11,7 @@ export default class App extends React.Component {
 
         this.setUrl = this.setUrl.bind(this);
         this.shorten = this.shorten.bind(this);
+        this.copyLinkToClipboard = this.copyLinkToClipboard.bind(this);
 
         //set initial state, otherwise null
         this.state = {
@@ -24,6 +26,7 @@ export default class App extends React.Component {
 
     shorten() {
         this.setState({isLoading: true});
+
         var service = new BitlyAPI();
         service.shorten(this.state.url)
             .then(shortened => {
@@ -34,12 +37,17 @@ export default class App extends React.Component {
             });
     }
 
+    copyLinkToClipboard(){
+        copyToClip(this.state.shortened.url)
+    }
+
     render() {
         return (
             <div>
                 <Shorten onUrlChange={this.setUrl}
                          shorten={this.shorten}
                          shortened={this.state.shortened}
+                         copyLinkToClipboard={this.copyLinkToClipboard}
                          isLoading={this.state.isLoading}/>
             </div>
         );
