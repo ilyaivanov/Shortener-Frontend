@@ -1,0 +1,7 @@
+//Bootstrap seems to conflict with notification system
+//So it's better to isolate bootstrap styles into a sandbox
+//So that there is no need to resolve conflicts with every single external module
+.bootstrap-context {
+    @import '../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap-sprockets';
+    @import '../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap';
+}
