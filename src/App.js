@@ -3,6 +3,7 @@ import Shorten from './components/ShortenPage';
 import BitlyAPI from './api/BitlyAPI';
 import copyToClip from './utils/copyToClipboard';
 import {Notification} from 'react-notification';
+import formatDate from './utils/dateUtils';
 
 //statefull container
 export default class App extends React.Component {
@@ -14,11 +15,15 @@ export default class App extends React.Component {
         this.copyLinkToClipboard = this.copyLinkToClipboard.bind(this);
 
         //set initial state, otherwise null
+        let createItem = (long_url, url, date) => ({
+            long_url, url, date
+        });
         this.state = {
             url: '',
             isLoading: false,
             isNotificationActive: false,
-            message: ''
+            message: '',
+            history: []
         };
     }
 
@@ -32,16 +37,18 @@ export default class App extends React.Component {
         let service = new BitlyAPI();
         service.shorten(this.state.url)
             .then(shortened => {
+                shortened.date = formatDate(new Date());
                 this.setState({
                     isLoading: false,
-                    shortened
+                    shortened,
+                    history: this.state.history.concat([shortened])
                 });
             });
     }
 
-    copyLinkToClipboard() {
-        copyToClip(this.state.shortened.url);
-        let message = `${this.state.shortened.url} copied to clipboard`;
+    copyLinkToClipboard(shortened) {
+        copyToClip(shortened.url);
+        let message = `${shortened.url} copied to clipboard`;
         this.setState({isNotificationActive: true, message});
         setTimeout(() => this.setState({isNotificationActive: false}), 3000);
     }
@@ -53,7 +60,8 @@ export default class App extends React.Component {
                          shorten={this.shorten}
                          shortened={this.state.shortened}
                          copyLinkToClipboard={this.copyLinkToClipboard}
-                         isLoading={this.state.isLoading}/>
+                         isLoading={this.state.isLoading}
+                         history={this.state.history}/>
                 <Notification
                     isActive={this.state.isNotificationActive}
                     message={this.state.message}

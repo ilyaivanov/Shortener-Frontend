@@ -5,3 +5,25 @@ $vin-blue: white;
 body {
   background-color: $vin-blue;
 }
+
+
+.copy-button{
+  visibility: hidden;
+}
+
+.list-group-item:hover .copy-button{
+  visibility: visible;
+}
+
+.recent-panel .copy-button{
+  visibility: visible;
+}
+
+.history-panel{
+  margin-top: 40px;
+}
+
+.copy-button{
+  margin-left: 10px;
+}
+

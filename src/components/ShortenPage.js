@@ -1,5 +1,6 @@
 import React, {PropTypes} from 'react';
 import Shortened from './ShortenedLink';
+import History from './History';
 import {Collapse, Form, FormControl, ControlLabel, FormGroup, Button} from 'react-bootstrap';
 
 let shorten = props => {
@@ -13,7 +14,7 @@ let shorten = props => {
         </Collapse>
 
         <Collapse in={!!props.shortened}>
-            <div><Shortened copyLinkToClipboard={props.copyLinkToClipboard}
+            <div className="recent-panel"><Shortened copyLinkToClipboard={props.copyLinkToClipboard}
                             shortened={props.shortened}/>
             </div>
         </Collapse>
@@ -29,6 +30,8 @@ let shorten = props => {
                 Shorten
             </Button>
         </Form>
+        <History history={props.history}
+                 copyLinkToClipboard={props.copyLinkToClipboard}/>
     </div>);
 };
 shorten.propTypes = {
@@ -36,6 +39,7 @@ shorten.propTypes = {
     onUrlChange: PropTypes.func.isRequired,
     copyLinkToClipboard: PropTypes.func.isRequired,
     shortened: PropTypes.object,
+    history: PropTypes.array,
     isLoading: PropTypes.bool.isRequired
 };
 
