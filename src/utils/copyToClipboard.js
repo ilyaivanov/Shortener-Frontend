@@ -1,6 +1,6 @@
 //source http://stackoverflow.com/a/30810322/1283124
 export default function copyTextToClipboard(text) {
-    var textArea = document.createElement("textarea");
+    let textArea = document.createElement("textarea");
 
     //
     // *** This styling is an extra step which is likely not required. ***
@@ -45,13 +45,9 @@ export default function copyTextToClipboard(text) {
 
     textArea.select();
 
-    try {
-        var successful = document.execCommand('copy');
-        var msg = successful ? 'successful' : 'unsuccessful';
-        console.log('Copying text command was ' + msg);
-    } catch (err) {
-        console.log('Oops, unable to copy');
-    }
+    document.execCommand('copy');
+    // let successful =
+    // let msg = successful ? 'successful' : 'unsuccessful';
 
     document.body.removeChild(textArea);
 }

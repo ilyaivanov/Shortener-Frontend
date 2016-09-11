@@ -3,7 +3,7 @@ import {Button} from 'react-bootstrap';
 
 
 let shortened = props => {
-    var link = props.shortened ? props.shortened.url : "";
+    let link = props.shortened ? props.shortened.url : "";
 
     return (<div>
         <a href={link}>{link}</a>

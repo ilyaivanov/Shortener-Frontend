@@ -19,7 +19,7 @@ export default class App extends React.Component {
             isLoading: false,
             isNotificationActive: false,
             message: ''
-        }
+        };
     }
 
     setUrl(url) {
@@ -29,7 +29,7 @@ export default class App extends React.Component {
     shorten() {
         this.setState({isLoading: true});
 
-        var service = new BitlyAPI();
+        let service = new BitlyAPI();
         service.shorten(this.state.url)
             .then(shortened => {
                 this.setState({
@@ -41,7 +41,7 @@ export default class App extends React.Component {
 
     copyLinkToClipboard() {
         copyToClip(this.state.shortened.url);
-        var message = `${this.state.shortened.url} copied to clipboard`
+        let message = `${this.state.shortened.url} copied to clipboard`;
         this.setState({isNotificationActive: true, message});
         setTimeout(() => this.setState({isNotificationActive: false}), 3000);
     }
