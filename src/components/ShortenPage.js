@@ -1,12 +1,9 @@
 import React, {PropTypes} from 'react';
 import Shortened from './ShortenedLink';
-import History from './History';
 import {Collapse, Form, FormControl, ControlLabel, FormGroup, Button} from 'react-bootstrap';
 
-let shorten = props => {
-
-
-    return (<div >
+let shorten = props => (
+    <div>
         <h1 className="page-header">Shortener</h1>
 
         <Collapse in={props.isLoading}>
@@ -15,6 +12,7 @@ let shorten = props => {
 
         <Collapse in={(!props.isLoading && !!props.shortened)}>
             <div className="recent-panel">
+                <small>Latest link:</small>
                 <Shortened copyLinkToClipboard={props.copyLinkToClipboard}
                            shortened={props.shortened}/>
             </div>
@@ -31,9 +29,8 @@ let shorten = props => {
                 Shorten
             </Button>
         </Form>
-
     </div>);
-};
+
 shorten.propTypes = {
     shorten: PropTypes.func.isRequired,
     onUrlChange: PropTypes.func.isRequired,

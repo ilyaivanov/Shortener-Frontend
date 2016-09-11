@@ -5,8 +5,10 @@ import History from './components/History';
 import {NotificationStack} from 'react-notification';
 import copyToClip from './utils/copyToClipboard';
 import formatDate from './utils/dateUtils';
+import isUrlValid from './utils/validateUrl';
 import shorteningService from './api/shorteningService';
 import Shorten from './components/ShortenPage';
+
 
 //statefull container
 class App extends React.Component {
@@ -16,17 +18,17 @@ class App extends React.Component {
         this.setUrl = this.setUrl.bind(this);
         this.shorten = this.shorten.bind(this);
         this.clearHistory = this.clearHistory.bind(this);
+        this.removeNotification = this.removeNotification.bind(this);
         this.copyLinkToClipboard = this.copyLinkToClipboard.bind(this);
 
         //set initial state, otherwise null
         this.state = {
             url: '',
             isLoading: false,
-            isNotificationActive: false,
             message: '',
             history: [],
             notifications: [],
-            notificationId: 1
+            newNotificationId: 1
         };
     }
 
@@ -35,6 +37,10 @@ class App extends React.Component {
     }
 
     shorten() {
+        if (!isUrlValid(this.state.url)) {
+            this.addNotification('URL is invalid', true);
+            return;
+        }
         this.setState({isLoading: true});
 
         shorteningService(this.state.url)
@@ -45,7 +51,10 @@ class App extends React.Component {
                         history: this.state.history.concat([shortened])
                     });
                 },
-                errorMessage => this.addNotification(errorMessage, true)
+                errorMessage => {
+                    this.setState({shortened: null});
+                    this.addNotification(errorMessage, true);
+                }
             )
             .then(() => this.setState({isLoading: false}));
     }
@@ -56,7 +65,7 @@ class App extends React.Component {
     }
 
     addNotification(message, isError) {
-        const newCount = this.state.notificationId + 1;
+        const newCount = this.state.newNotificationId + 1;
         return this.setState({
             notifications: this.state.notifications.concat([{
                 message,
@@ -66,7 +75,7 @@ class App extends React.Component {
                 onClick: () => this.removeNotification(newCount),
                 dismissAfter: 4000
             }]),
-            notificationId: newCount
+            newNotificationId: newCount
         });
     }
 
@@ -74,10 +83,8 @@ class App extends React.Component {
         this.setState({history: []});
     }
 
-    removeNotification(count) {
-        this.setState({
-            notifications: this.state.notifications.filter(n => n.key !== count)
-        })
+    removeNotification(id) {
+        this.setState({notifications: this.state.notifications.filter(n => n.key !== id)});
     }
 
     render() {
@@ -100,9 +107,7 @@ class App extends React.Component {
 
                 <NotificationStack
                     notifications={this.state.notifications}
-                    onDismiss={notification => this.setState({
-                        notifications: this.state.notifications.splice(1, this.state.notifications.length)
-                    })}
+                    onDismiss={notification => this.removeNotification(notification.key)}
                 />
             </div>
         );
