@@ -1,16 +1,10 @@
+import $ from 'jquery';
+
 export default class BitlyA {
     shorten(url) {
-        //track if there are any pending requests
-        //if there are - abot old and trigger new
-        return new Promise(function (resolve) {
-            let delay = 1000;
+        return new Promise(function (resolve, reject) {
 
-            let response = {
-                "url": url,
-                "shorten_url": "http://localhost:3000/s4"
-            };
             let accessToken = 'a06400a1dcadee2de02a7df7bee8110fb03523ee';
-
             let bitLyrequest = `https://api-ssl.bitly.com/v3/shorten?access_token=${accessToken}&longUrl=${url}`;
 
             let bitLyResponse = {
@@ -25,7 +19,9 @@ export default class BitlyA {
                 }
             };
 
-            setTimeout(() => resolve(bitLyResponse.data), delay);
+            $.ajax(bitLyrequest)
+                .done(response => resolve(response.data))
+                .fail(reject);
         });
     }
 }
