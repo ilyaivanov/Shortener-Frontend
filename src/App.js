@@ -2,7 +2,7 @@ import React from 'react';
 import Shorten from './components/ShortenPage';
 import BitlyAPI from './api/BitlyAPI';
 import copyToClip from './utils/copyToClipboard';
-import {Notification} from 'react-notification';
+import {NotificationStack} from 'react-notification';
 import formatDate from './utils/dateUtils';
 
 //statefull container
@@ -23,7 +23,9 @@ export default class App extends React.Component {
             isLoading: false,
             isNotificationActive: false,
             message: '',
-            history: []
+            history: [],
+            notifications: [],
+            notificationId: 1
         };
     }
 
@@ -48,23 +50,47 @@ export default class App extends React.Component {
 
     copyLinkToClipboard(shortened) {
         copyToClip(shortened.url);
-        let message = `${shortened.url} copied to clipboard`;
-        this.setState({isNotificationActive: true, message});
-        setTimeout(() => this.setState({isNotificationActive: false}), 3000);
+        this.addNotification(`${shortened.url} copied to clipboard`);
+    }
+
+    addNotification(message) {
+        const newCount = this.state.notificationId + 1;
+        return this.setState({
+            notifications: this.state.notifications.concat([{
+                message,
+                key: newCount,
+                className: "shortened-notification",
+                action: 'Dismiss',
+                onClick: () => this.removeNotification(newCount),
+                dismissAfter: 7000
+            }]),
+            notificationId: newCount
+        });
+    }
+
+    removeNotification(count) {
+        this.setState({
+            notifications: this.state.notifications.filter(n => n.key !== count)
+        })
     }
 
     render() {
+        console.log(this.state.notifications);
         return (
             <div>
-                <Shorten onUrlChange={this.setUrl}
-                         shorten={this.shorten}
-                         shortened={this.state.shortened}
-                         copyLinkToClipboard={this.copyLinkToClipboard}
-                         isLoading={this.state.isLoading}
-                         history={this.state.history}/>
-                <Notification
-                    isActive={this.state.isNotificationActive}
-                    message={this.state.message}
+                <div className="bootstrap-context">
+                    <Shorten onUrlChange={this.setUrl}
+                             shorten={this.shorten}
+                             shortened={this.state.shortened}
+                             copyLinkToClipboard={this.copyLinkToClipboard}
+                             isLoading={this.state.isLoading}
+                             history={this.state.history}/>
+                </div>
+                <NotificationStack
+                    notifications={this.state.notifications}
+                    onDismiss={notification => this.setState({
+                        notifications: this.state.notifications.splice(1, this.state.notifications.length)
+                    })}
                 />
             </div>
         );

@@ -1,11 +1,10 @@
-/* Variables */
-$vin-blue: white;
-
-/* Styles */
 body {
-  background-color: $vin-blue;
+  font-family: 'Open Sans', sans-serif;
 }
 
+.container .copy-button{
+  margin-left: 10px;
+}
 
 .copy-button{
   visibility: hidden;
@@ -17,13 +16,9 @@ body {
 
 .recent-panel .copy-button{
   visibility: visible;
+
 }
 
 .history-panel{
   margin-top: 40px;
 }
-
-.copy-button{
-  margin-left: 10px;
-}
-
